@@ -229,15 +229,15 @@ trait Elocrypt55
         return $this->doDecryptAttributes(parent::getArrayableAttributes());
     }
 
-    /**
-     * Get all of the current attributes on the model.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->doDecryptAttributes(parent::getAttributes());
-    }
+//    /**
+//     * Get all of the current attributes on the model.
+//     *
+//     * @return array
+//     */
+//    public function getAttributes()
+//    {
+//        return $this->doDecryptAttributes(parent::getAttributes());
+//    }
 
 
     public function getDirty()
