@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Crypt;
 /**
  * Trait Elocrypt.
  *
- * Automatically encrypt and decrypt Laravel 5 Eloquent values
+ * Automatically encrypt and decrypt Laravel 5.5 Eloquent values
  *
  * ### Example
  *
@@ -59,7 +59,7 @@ use Illuminate\Support\Facades\Crypt;
  * @see Illuminate\Encryption\Encrypter
  * @link http://laravel.com/docs/5.1/eloquent
  */
-trait Elocrypt
+trait Elocrypt55
 {
     //
     // Methods below here are native to the trait.
@@ -238,4 +238,33 @@ trait Elocrypt
     {
         return $this->doDecryptAttributes(parent::getAttributes());
     }
+
+
+    public function getDirty()
+    {
+        $dirty = [];
+
+        foreach ($this->attributes as $key => $value) {
+            if (! $this->originalIsEquivalent($key, $value)) {
+                $dirty[$key] = $value;
+            }
+        }
+
+        return $dirty;
+    }
+
+
+    /**
+     * Decrypt encrypted data before it is processed by cast attribute
+     * @param $key
+     * @param $value
+     *
+     * @return mixed
+     */
+    protected function castAttribute($key, $value)
+    {
+        return parent::castAttribute($key, $this->doDecryptAttribute($key, $value));
+    }
+
+
 }
